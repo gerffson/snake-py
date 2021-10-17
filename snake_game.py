@@ -13,9 +13,9 @@ class SnakeGame:
  
     def __init__(self):
         self.game_over = False
-        self.snake_body = SnakeBody(100, 100, 0 , 0)
-        self.screen_height = 300
-        self.screen_width = 200
+        self.snake_body = SnakeBody(300, 300, 0 , 0)
+        self.screen_height = 800
+        self.screen_width = 600
         self.block_size = 10
         self.game_speed = 10        
         self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)
@@ -45,11 +45,12 @@ class SnakeGame:
             self.snake_body.x += self.snake_body.x_direction
             self.snake_body.y += self.snake_body.y_direction 
                       
-            print(self.snake_body.snake_list)                
+            #print(self.snake_body.snake_list)                
 
             screen.fill(colors.WHITE)
 
             if (self.snake_body.x > self.screen_height) or (self.snake_body.x < 0) or (self.snake_body.y > self.screen_width) or (self.snake_body.y < 0):                                
+                print("Game Over")
                 self.game_over = True
 
             if (self.snake_body.x == self.food.x) and (self.snake_body.y == self.food.y) : 
@@ -67,26 +68,19 @@ class SnakeGame:
 
     def __grow_snake(self):        
         (tempx, tempy) = self.snake_body.snake_list[0]
-        if self.snake_body.x_direction == 10:
-            print("self.snake_body.x_direction == 10")
+        if self.snake_body.x_direction == 10:            
             tempx -= 10
         elif self.snake_body.x_direction == -10:
-            print("self.snake_body.x_direction == -10")
             tempx += 10
         elif self.snake_body.y_direction == 10:
-            print("self.snake_body.y_direction == 10")
             tempy -= 10
         elif self.snake_body.y_direction == -10:
-            print("self.snake_body.y_direction == -10")
             tempy += 10
 
         new_snake_list = []
         new_snake_list.append((tempx, tempy))
         for i in range(0, len(self.snake_body.snake_list) , 1): 
             new_snake_list.append(self.snake_body.snake_list[i])
-
-        print("nova lista")
-        print(new_snake_list)    
 
         self.snake_body.snake_list = new_snake_list
 
@@ -110,5 +104,5 @@ class SnakeGame:
         random_x = math.floor(randint(0, height) / block_size) * block_size
         random_y = math.floor(randint(0, width) / block_size) * block_size   
         food = Food(random_x, random_y)
-        print(" FOOD : [X : " + str(food.x) + ", Y : " + str(food.y)+ "]" )     
+        #print(" FOOD : [X : " + str(food.x) + ", Y : " + str(food.y)+ "]" )     
         return food

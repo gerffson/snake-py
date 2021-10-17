@@ -1,4 +1,3 @@
-import math
 from snake_game import SnakeGame
 
 def main():
