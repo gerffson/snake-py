@@ -25,7 +25,7 @@ class SnakeGame:
         pygame.init()        
         screen = pygame.display.set_mode((self.screen_height, self.screen_width))
         pygame.display.set_caption('Snake Game')
-        background_image = pygame.image.load("grass2.jpg").convert()    
+        background_image = pygame.image.load("grass.jpg").convert()    
         background_image = pygame.transform.scale(background_image, (800, 600))    
         screen.blit(background_image, [0, 0])
         
