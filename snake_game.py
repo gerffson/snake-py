@@ -17,7 +17,7 @@ class SnakeGame:
         self.screen_height = 800
         self.screen_width = 600
         self.block_size = 10
-        self.game_speed = 10        
+        self.game_speed = 5        
         self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)
 
     def start(self):
@@ -55,6 +55,7 @@ class SnakeGame:
 
             if (self.snake_body.x == self.food.x) and (self.snake_body.y == self.food.y) : 
                 self.__grow_snake() 
+                self.game_speed += 2 
                 self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)                
 
 
