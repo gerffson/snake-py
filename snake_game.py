@@ -17,7 +17,7 @@ class SnakeGame:
         self.screen_height = 800
         self.screen_width = 600
         self.block_size = 10
-        self.game_speed = 5        
+        self.game_speed = 20        
         self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)        
 
     def start(self):
@@ -25,7 +25,7 @@ class SnakeGame:
         pygame.init()        
         screen = pygame.display.set_mode((self.screen_height, self.screen_width))
         pygame.display.set_caption('Snake Game')
-        background_image = pygame.image.load("grass.jpeg").convert()    
+        background_image = pygame.image.load("grass2.jpg").convert()    
         background_image = pygame.transform.scale(background_image, (800, 600))    
         screen.blit(background_image, [0, 0])
         
@@ -106,8 +106,12 @@ class SnakeGame:
     
 
     def __draw_food(self, screen, food, block_size):
-        pygame.draw.rect(screen, colors.RED, [food.x, food.y, block_size, block_size])
-        pygame.display.update() 
+
+        img_pig = pygame.image.load("apple_small.png")            
+        screen.blit(img_pig, (food.x, food.y))
+        pygame.display.flip()
+        #pygame.draw.rect(screen, colors.RED, [food.x, food.y, block_size, block_size])
+        #pygame.display.update() 
 
 
     def __random_food(self, height, width, block_size):
