@@ -18,14 +18,18 @@ class SnakeGame:
         self.screen_width = 600
         self.block_size = 10
         self.game_speed = 5        
-        self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)
+        self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)        
 
     def start(self):
 
         pygame.init()        
         screen = pygame.display.set_mode((self.screen_height, self.screen_width))
         pygame.display.set_caption('Snake Game')
-
+        background_image = pygame.image.load("grass.jpeg").convert()    
+        background_image = pygame.transform.scale(background_image, (800, 600))    
+        screen.blit(background_image, [0, 0])
+        
+        pygame.display.flip()
         clock = pygame.time.Clock() 
 
         while not self.game_over:
@@ -46,9 +50,7 @@ class SnakeGame:
             self.snake_body.y += self.snake_body.y_direction 
                       
             #print(self.snake_body.snake_list)                
-
-            screen.fill(colors.WHITE)
-
+            
             if (self.snake_body.x > self.screen_height) or (self.snake_body.x < 0) or (self.snake_body.y > self.screen_width) or (self.snake_body.y < 0):                                
                 print("Game Over")
                 self.game_over = True
@@ -58,7 +60,10 @@ class SnakeGame:
                 self.game_speed += 2 
                 self.food = self.__random_food(self.screen_height, self.screen_width, self.block_size)                
 
+            rect = background_image.get_rect()            
+            screen.blit(background_image, rect)
 
+            pygame.display.flip()
             self.__update_snake()
             self.__draw_snake(screen, self.block_size)
             self.__draw_food(screen, self.food, self.block_size)
@@ -66,6 +71,7 @@ class SnakeGame:
             clock.tick(self.game_speed)
 
         pygame.quit()
+
 
     def __grow_snake(self):        
         (tempx, tempy) = self.snake_body.snake_list[0]
@@ -91,15 +97,18 @@ class SnakeGame:
             del self.snake_body.snake_list[0]
         self.snake_body.snake_list.append((self.snake_body.x, self.snake_body.y))
 
+
     def __draw_snake(self, screen, block_size):         
         for i in range(len(self.snake_body.snake_list), 0, -1):            
             (x,y) = self.snake_body.snake_list[i - 1]
             pygame.draw.rect(screen, colors.BLACK, [x, y, block_size, block_size])
             pygame.display.update() 
     
+
     def __draw_food(self, screen, food, block_size):
         pygame.draw.rect(screen, colors.RED, [food.x, food.y, block_size, block_size])
         pygame.display.update() 
+
 
     def __random_food(self, height, width, block_size):
         random_x = math.floor(randint(0, height) / block_size) * block_size
