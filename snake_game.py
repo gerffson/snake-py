@@ -6,7 +6,6 @@ from food import Food
 from random import randint
 import math
 
-
 clear = lambda: os.system('clear')
 
 class SnakeGame:
@@ -23,8 +22,8 @@ class SnakeGame:
     def start(self):
 
         pygame.init()        
-        screen = pygame.display.set_mode((self.screen_height, self.screen_width))
         pygame.display.set_caption('Snake Game')
+        screen = pygame.display.set_mode((self.screen_height, self.screen_width))        
         background_image = pygame.image.load("grass.jpg").convert()    
         background_image = pygame.transform.scale(background_image, (800, 600))    
         screen.blit(background_image, [0, 0])
@@ -38,13 +37,13 @@ class SnakeGame:
                     self.game_over = True
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
-                        self.snake_body.set_xy_direction(-20, 0)
+                        self.snake_body.set_xy_direction(-1 * self.block_size, 0)
                     elif event.key == pygame.K_RIGHT:
-                        self.snake_body.set_xy_direction(20, 0)
+                        self.snake_body.set_xy_direction(self.block_size, 0)
                     elif event.key == pygame.K_UP:
-                        self.snake_body.set_xy_direction(0, -20)
+                        self.snake_body.set_xy_direction(0, -1 * self.block_size)
                     elif event.key == pygame.K_DOWN:
-                        self.snake_body.set_xy_direction(0, 20)
+                        self.snake_body.set_xy_direction(0, self.block_size)
         
             self.snake_body.x += self.snake_body.x_direction
             self.snake_body.y += self.snake_body.y_direction 
@@ -66,11 +65,8 @@ class SnakeGame:
 
             self.update_snake()
             self.draw_snake(screen, self.block_size)
-            self.draw_food(screen, self.food, self.block_size)
-
-            #pygame.display.update()
-
-
+            self.draw_food(screen, self.food, self.block_size)            
+            
             clock.tick(self.game_speed)
 
         pygame.quit()
@@ -78,14 +74,14 @@ class SnakeGame:
 
     def grow_snake(self):        
         (tempx, tempy) = self.snake_body.snake_list[0]
-        if self.snake_body.x_direction == 20:            
-            tempx -= 20
-        elif self.snake_body.x_direction == -20:
-            tempx += 20
-        elif self.snake_body.y_direction == 20:
-            tempy -= 20
-        elif self.snake_body.y_direction == -20:
-            tempy += 20
+        if self.snake_body.x_direction == self.block_size:            
+            tempx -= self.block_size
+        elif self.snake_body.x_direction == (-1 * self.block_size):
+            tempx += self.block_size
+        elif self.snake_body.y_direction == self.block_size:
+            tempy -= self.block_size
+        elif self.snake_body.y_direction == (-1 * self.block_size):
+            tempy += self.block_size
 
         new_snake_list = []
         new_snake_list.append((tempx, tempy))
